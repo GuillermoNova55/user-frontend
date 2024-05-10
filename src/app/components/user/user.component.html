@@ -1,0 +1,87 @@
+<h3>{{title}}</h3>
+
+<button class="btn btn-primary my-3" [routerLink]="['/users/create']">Crear Usuario</button>
+<button class="btn btn-primary my-3" (click)="filterData('edad')">Filtrar edad</button>
+<button class="btn btn-primary my-3" (click)="filterData('name')">Filtrar nombre</button>
+@if (users.length == 0) {
+<div class="alert alert-warning">No hay registros en el sistema!</div>
+} @else { 
+<div *ngIf="filtername">    
+<table class="table table-hover table-striped" >
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Document</th>
+            <th>email</th>
+            <th>Date</th>
+            <th>Delete</th>
+            <th>update</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (user of users; track $index) {
+        <tr>
+            <td> {{user.name}} </td>
+            <td> {{user.document}} </td>
+            <td> {{user.email}} </td>
+            <td> {{user.dateofbirth}} </td>
+            <td>
+                <button class="btn btn-danger btn-sm"
+                (click)="onDeleteUser(user.id)"
+                >
+                    Delete
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-success btn-sm"
+                [routerLink]="['/users/edit', user.id]">
+                    update
+                </button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+</div>
+<div class="container" *ngIf="filterdate">
+    
+    <table class="table">
+        <thead>
+          
+            <tr>
+                <th>Nombre</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (user of users; track $index) {
+            <tr>
+                <td>{{user.name}}</td>
+                <td>{{ calculateAge(user.dateofbirth) }}</td>
+            </tr>
+        }
+        </tbody>
+
+</table>
+</div>
+
+<div class="container" >
+    <table class="table">
+        <thead>
+          
+            <tr>
+                <th>Total clientes</th>
+                <th>Promedio Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{clients}}</td>
+                <td></td>
+            </tr>
+        
+        </tbody>
+
+</table>
+</div>
+} 
